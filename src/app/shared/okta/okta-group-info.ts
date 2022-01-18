@@ -6,6 +6,7 @@ export interface OktaGroupInfo {
   groupname: string;
   img: string;
   url: string;
+  
 }
 
 export const PortalApps = [

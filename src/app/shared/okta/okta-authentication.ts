@@ -59,7 +59,7 @@ export class AuthService {
     var oktaSignIn = new OktaSignIn({
       clientId: OktaClientID,
       baseUrl: OktaBaseURI,
-      language: 'ja',
+      language: OktaLang,
       redirectUri: OktaRedirect,
       colors: {
         brand: OktaBrand,
@@ -68,11 +68,11 @@ export class AuthService {
       postLogoutRedirectUri: OktaPostlogoutURI,
       authParams: {
         issuer: OktaIssuer,
-        responseMode: 'fragment',
+        responseMode: OktaResMode,
         responseType: OktaResType,
         scopes: OktaScope,
         pkce: false,
-        prompt: OktaResMode
+        // prompt: OktaResMode
       },
     });
 

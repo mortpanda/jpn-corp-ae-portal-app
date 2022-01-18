@@ -12,7 +12,9 @@ import {
   UserClaims,
   TokenParams
 } from '@okta/okta-auth-js'
-import {OktaGroupInfo, PortalApps} from 'app/shared/okta/okta-group-info';
+import { OktaGroupInfo, PortalApps } from 'app/shared/okta/okta-group-info';
+
+
 
 @Component({
   selector: 'app-portal',
@@ -21,7 +23,9 @@ import {OktaGroupInfo, PortalApps} from 'app/shared/okta/okta-group-info';
   encapsulation: ViewEncapsulation.None
 })
 export class PortalComponent implements OnInit {
-  
+  strAccessToken;
+  strUserID;
+
   PortalApps = PortalApps;
   AppsFromGroup = [];
 
@@ -38,11 +42,17 @@ export class PortalComponent implements OnInit {
   arrGroups: any;
 
 
-  constructor(private _snackBar: MatSnackBar, private oktaSDKAuth: OktaSDKAuthService, private OktaConfigService: OktaConfigService) { }
+  constructor(
+    private _snackBar: MatSnackBar,
+    private oktaSDKAuth: OktaSDKAuthService,
+    private OktaConfigService: OktaConfigService,
+
+    
+  ) { }
 
   async ngOnInit() {
     //console.log("Hiding restricted content until user group membership is verified.....")
-    
+
     //////////////////////////// DO NOT DELETE ////////////////////////////
     // document.getElementById("memberNews").style.visibility = "hidden";
     // document.getElementById("memberDentaku").style.visibility = "hidden";
@@ -81,7 +91,7 @@ export class PortalComponent implements OnInit {
             //console.log(res.state);
             var strUser = tokens.idToken.claims.email;
             //console.log(strUser);
-            return tokens.idToken.claims.email;
+            return [tokens.idToken.claims.email, tokens.accessToken.accessToken, tokens.accessToken.claims.uid];
           }
           )
 
@@ -95,32 +105,43 @@ export class PortalComponent implements OnInit {
           ////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////
 
-          
+
           for (var j = 0; j < this.PortalApps.length; j++) {
-            if (this.strGroupMemberships.tokens.idToken.claims.okta_groups[i] == this.PortalApps[j].groupname){
-            console.log("Found : " + this.PortalApps[j].groupname);
-            this.AppsFromGroup.push(this.PortalApps[j]);
-          }
+            if (this.strGroupMemberships.tokens.idToken.claims.okta_groups[i] == this.PortalApps[j].groupname) {
+              console.log("Found : " + this.PortalApps[j].groupname);
+              this.AppsFromGroup.push(this.PortalApps[j]);
+            }
           }
           ////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////
-          
+
         }
         const strUserGet = async () => {
           const strUseremail = await strSession;
-          this.UserLoggedIn = strUseremail;
-          this.strWelcome = "ようこそ"
+          this.UserLoggedIn = strUseremail[0];
+          // this.strAccessToken = strUseremail[1];
+          // this.strUserID = strUseremail[2];
+          this.strWelcome = "ようこそ";
+          // console.log(this.strAccessToken);
+          // console.log(this.strUserID);  
+
         }
+
         if (location.pathname == "/profile") {
           //If not in the profile page, don't get the current user
         }
         else {
           strUserGet();
+
         }
     }
     console.log(this.AppsFromGroup);
+
   }
+
+
 }
+
 
 
 
