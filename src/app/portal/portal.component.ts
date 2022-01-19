@@ -13,6 +13,8 @@ import {
   TokenParams
 } from '@okta/okta-auth-js'
 import { OktaGroupInfo, PortalApps } from 'app/shared/okta/okta-group-info';
+import { HowtoComponent } from 'app/howto/howto.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 
 
@@ -46,9 +48,19 @@ export class PortalComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private oktaSDKAuth: OktaSDKAuthService,
     private OktaConfigService: OktaConfigService,
-
-    
+    public HowtoComponent: HowtoComponent,
+    public _matdialog: MatDialog
   ) { }
+
+  OpenHowto() {
+    const HowtoDialogConfig = new MatDialogConfig();
+    HowtoDialogConfig.disableClose = false;
+    HowtoDialogConfig.id = "widget-modal-component";
+    HowtoDialogConfig.height = "70%";
+    HowtoDialogConfig.width = "50%";
+    const modalDialog = this._matdialog.open(HowtoComponent, HowtoDialogConfig);
+  }
+
 
   async ngOnInit() {
     //console.log("Hiding restricted content until user group membership is verified.....")

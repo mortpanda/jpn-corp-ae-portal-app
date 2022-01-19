@@ -48,6 +48,7 @@ import { OktaAuthModule } from '@okta/okta-angular';
 import { WhoisoktaComponent } from './whoisokta/whoisokta.component';
 import { SdkLoginComponent } from './sdk-login/sdk-login.component';
 import { IntegrationsComponent } from './integrations/integrations.component';
+import { HowtoComponent } from './howto/howto.component';
 
 
 
@@ -64,6 +65,7 @@ import { IntegrationsComponent } from './integrations/integrations.component';
     WhoisoktaComponent,
     SdkLoginComponent,
     IntegrationsComponent,
+    HowtoComponent,
     
     
     
@@ -106,7 +108,7 @@ import { IntegrationsComponent } from './integrations/integrations.component';
     MatSelectModule
 
   ],
-  providers: [OktaSDKAuthService], 
+  providers: [OktaSDKAuthService, HowtoComponent], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
